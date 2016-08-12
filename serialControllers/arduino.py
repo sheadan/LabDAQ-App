@@ -9,7 +9,6 @@ import time
 class Arduino(object):
     def __init__(self):
         self.ser = None
-        self.port = ""
 
     def connect_to_arduino(self, usbport, baud=115200):
         self.ser = None
@@ -24,8 +23,6 @@ class Arduino(object):
              rtscts=0,
              interCharTimeout=None
             )
-        self.port = usbport
-        #print "Serial Connected"
 
 
     def poll(self):
@@ -38,8 +35,8 @@ class Arduino(object):
         Line 6: Analog 5 reading
         Line 7: Timestamp in milliseconds
         """
-        self.ser.flush() #flush before sending signal
-        self.ser.write('w') #send signal telling Arduino to send data
+        self.ser.flush() # flush before sending signal
+        self.ser.write('w') # send signal telling Arduino to send data
 
         # now read lines sent by the Arduino and store into list
         data = []
@@ -61,13 +58,21 @@ class Arduino(object):
         return [data, dataFlag]
 
 
+    def trigger_alarm(self):
+        """ Trigger alarm function programmed into Arduino firmware """
+        self.ser.flush() # flush before sending signal
+        self.ser.write('a') #send signal telling Arduino to sound the alarm
+
+
     def disconnect(self):
-        if self.ser:
+        """disconnect from arduino device"""
+        if self.is_connected():
             self.ser.close()
             self.ser = None
 
 
     def is_connected(self):
+        """returns connection status (true=connected, false=disconnected)"""
         if self.ser:
             return self.ser.isOpen()
         else:

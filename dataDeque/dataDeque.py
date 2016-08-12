@@ -57,9 +57,10 @@ class dataDeque:
     def set_deque_length(self, newLength):
         #Create new data and time deques with newly specified length using
         # data from previous deque
+        print newLength
         self.dequeLength = newLength
-        self.dataDeque = deque( self.dataDeque, self.dequeLength)
-        self.timeDeque = deque( self.timeDeque, self.dequeLength)
+        self.dataDeque = deque( [[0.0]*6]*self.dequeLength, self.dequeLength)
+        self.timeDeque = deque( [0.0]*self.dequeLength, self.dequeLength)
 
 
     def append_data(self, dataRow):

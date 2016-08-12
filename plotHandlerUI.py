@@ -12,36 +12,30 @@ import sys
 import math
 
 
-class PlotHandler(tk.Frame):
-    def __init__(self, parent, dataDeque, *args, **kwargs):
+class PlotHandlerUI(tk.Frame):
+    def __init__(self, parent, dataHandler, *args, **kwargs):
         """Initialize plotting frame, data deque, and number of plots"""
         # TkInter frame and define parent
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        # Assign dataDeque -- note that this may be changed in future to be a single deque***
-        self.dataDeque = dataDeque
-        #initialize number of plots and plot size in plotSizeInPoints
-        self.numPlots = len( list(dataDeque.dataDeque[0]) )
-        self.plotSizeInPoints = len( list(dataDeque.dataDeque) )
+
+        # initialize attribute for dataHandler
+        self.dataHandler = dataHandler
+
+        #initialize attributes for # of plots
+        self.numPlots = len( dataHandler.channels )
+
         # create frame for MPL figure
         self.create_plot_panel()
         # create menu for number of plots
         self.create_plot_control_panel()
 
-    def update_plot_size(self, dataDeque):
-        """determine size of plots (#of pts in each plt)"""
-        self.plotSizeInPoints = len( list(dataDeque.dataDeque) )
-        #repeat plot initialization based on input
-        self.init_plots()
-        self.plotCanvas.draw()
 
     def create_plot_panel(self):
         """Create matplotlib figure, subplots (via init_plots), and canvas"""
         # generate figure (assign dpi to image)
         self.figure = Figure(figsize=(5, 4), dpi=100)
         self.figure.subplots_adjust(hspace=.5) # adjust sub plot spacing
-        # initialize subplots on figure
-        #self.init_plots()
         # generate canvas
         self.plotCanvas = FigureCanvasTkAgg(self.figure, master=self)
         # show canvas
@@ -83,27 +77,26 @@ class PlotHandler(tk.Frame):
         self.init_plots()
         self.plotCanvas.draw()
 
-    def update_plots(self, dataDeque):
+    def update_plots(self):
         """For live-updating of plots"""
-        x = np.array( list(dataDeque.dataDeque) )
-        #t = np.array( list(dataDeque.timeDeque) )
-
-        for (i, ax) in enumerate(self.axes):
-            ax.plot(range(0,self.plotSizeInPoints), x[:,i],'k')
-            ax.set_title('CH A'+str(i))
-            ax.set_ylim(0,5)
-            ax.set_yticks([0, 1, 2, 3, 4, 5])
-            ax.set_xticks([])
-            ax.hold(False)
+        assert( self.numPlots <= len(self.dataHandler.channels) )
+        for i in range(0,self.numPlots):
+            channel = self.dataHandler.channels[i]
+            data = list(channel.data)
+            num_points = len(data)
+            axes = self.axes[i]
+            axes.plot(range(0,num_points), data,'k', color='c')
+            axes.set_title('CH A'+str(i))
+            axes.set_ylim(0,5)
+            axes.set_yticks([0, 1, 2, 3, 4, 5])
+            axes.set_xticks([])
+            axes.hold(False)
+            if channel.alarm:
+                axes.axhline(y=channel.alarm.triggerValue, xmax=num_points, color='c')
 
         self.plotCanvas.draw()
 
 
-    def update_data_deque(self, dataDeque):
-        """For setting data deque if new deque is needed
-        this is used for increasing plot size/changing num plots"""
-        self.dataDeque = dataDeque
-        self.update_plot_size_and_num()
 
 
 

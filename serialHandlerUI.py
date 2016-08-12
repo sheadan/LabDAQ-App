@@ -20,7 +20,7 @@ import Tkinter as tk
 import ttk
 
 
-class SerialHandler(tk.Frame):
+class SerialHandlerUI(tk.Frame):
 
     def __init__(self, parent=None, device=None, *args, **kwargs):
         #Initialize TkInter frame and define parent
@@ -133,7 +133,7 @@ class SerialHandler(tk.Frame):
             self.canvas.itemconfigure(self.indicator, fill='dark green')
             self.disconnectButton.configure(state=tk.DISABLED)
             self.connectButton.configure(state=tk.NORMAL)
-            print "closed connection successfully from port %s" % self.device.port
+            print "closed connection successfully from port"
             self.isConnected = False
         #if unsuccessful, print failure notice
         except Exception as inst:
@@ -155,7 +155,7 @@ class SerialHandler(tk.Frame):
         # create options menu
         for port in self.ports:
             self.optionsMenu['menu'].add_command( label=port, command=tk._setit(self.portsVar, port) )
-            
+
         # if ports are available, allow connect button to be enabled
         self.check_ports_availability()
 
