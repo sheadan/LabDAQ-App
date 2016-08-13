@@ -15,7 +15,6 @@ import sys
 import serialHandlerUI as sH
 import dataHandlerUI as dH
 import plotHandlerUI as pH
-#from dataDeque.dataDeque import dataDeque as dD
 from dataDeque.datahandler import DataHandler
 from serialControllers.arduino import Arduino as arduino
 
@@ -23,15 +22,11 @@ from serialControllers.arduino import Arduino as arduino
 # Python 3
 # import tkinter as tk
 # from tkinter import ttk
-# import _thread as thread
 
 # Python 2
 import Tkinter as tk
 import ttk
-import thread
 
-#Python 2 and 3
-import threading
 
 
 
