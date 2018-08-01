@@ -8,16 +8,12 @@ self.device refers to an Arduino object that can be used for data polling/acquis
 
 BAUD_RATE = 115200
 
-from serialControllers.getSerial import getSerialPorts
-from serialControllers.arduino import Arduino as arduino
+from getSerial import getSerialPorts
+from arduino import Arduino as arduino
 
 # Python 3
-# import tkinter as tk
-# from tkinter import ttk
-
-# Python 2
-import Tkinter as tk
-import ttk
+import tkinter as tk
+import tkinter.ttk as ttk
 
 
 class SerialHandlerUI(tk.Frame):
@@ -40,7 +36,7 @@ class SerialHandlerUI(tk.Frame):
     # abstracted this to a separate function so it can be updated on-the-fly
     def check_for_ports(self):
         self.ports = getSerialPorts()
-        #print self.ports
+        #print(self.ports)
 
 
     def create_serial_widgets(self, parent, instrument):
@@ -116,11 +112,11 @@ class SerialHandlerUI(tk.Frame):
             self.canvas.itemconfigure(self.indicator, fill='green')
             self.disconnectButton.configure(state=tk.NORMAL)
             self.connectButton.configure(state=tk.DISABLED)
-            print "connected successfully to device on port %s" % port
+            print("connected successfully to device on port %s" % port)
         except Exception as inst:
             print(type(inst))    # the exception instance
             print(inst.args)     # arguments stored in .args
-            print "failed to connect to arduino"
+            print("failed to connect to arduino")
 
 
     def disconnect_arduino(self):
@@ -133,13 +129,13 @@ class SerialHandlerUI(tk.Frame):
             self.canvas.itemconfigure(self.indicator, fill='dark green')
             self.disconnectButton.configure(state=tk.DISABLED)
             self.connectButton.configure(state=tk.NORMAL)
-            print "closed connection successfully from port"
+            print("closed connection successfully from port")
             self.isConnected = False
         #if unsuccessful, print failure notice
         except Exception as inst:
             print(type(inst))    # the exception instance
             print(inst.args)     # arguments stored in .args
-            print "failed to disconnect from arduino"
+            print("failed to disconnect from arduino")
 
 
     def update_option_menu(self):

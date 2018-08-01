@@ -3,6 +3,7 @@ DataSaver handles saving data to file
 """
 
 # Python 2 and Python 3
+import datetime
 import itertools
 import os
 CURRENT_PATH = "".join( [os.getcwd(), "\data\\test.txt"] )
@@ -34,7 +35,7 @@ class DataSaver:
                 self.recordFlag = True #if successful, change flag value
                 return True #and return True for GUI
             except IOError as err:
-                print "Failed to open file" #if file opening fails, report failure
+                print("Failed to open file") #if file opening fails, report failure
                 self.recordFile = None # set the recordFile to none
                 self.recordFlag = False
                 return False # and return False for GUI (indicating failure)
@@ -49,6 +50,9 @@ class DataSaver:
         """Writes a data row to the file"""
         #only proceed if record flag is set
         if self.recordFlag:
+            # timestamp
+            sysTime = str(datetime.datetime.now())
+            sysTime += ","
             # format timepoint as a String
             timePoint = repr(timePoint)
             # format timept to write to file
@@ -58,6 +62,7 @@ class DataSaver:
             dataRow += '\n'
             #try writing to file, print if there is an error
             try:
+                self.recordFile.write(sysTime)
                 self.recordFile.write(timePoint)
                 self.recordFile.write(dataRow)
 

@@ -36,7 +36,7 @@ class Arduino(object):
         Line 7: Timestamp in milliseconds
         """
         self.ser.flush() # flush before sending signal
-        self.ser.write('w') # send signal telling Arduino to send data
+        self.ser.write(b'w') # send signal telling Arduino to send data
 
         # now read lines sent by the Arduino and store into list
         data = []

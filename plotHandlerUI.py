@@ -6,8 +6,8 @@ matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
 import numpy as np
-import Tkinter as tk
-import ttk
+import tkinter as tk
+from tkinter import ttk
 import sys
 import math
 
@@ -39,7 +39,7 @@ class PlotHandlerUI(tk.Frame):
         # generate canvas
         self.plotCanvas = FigureCanvasTkAgg(self.figure, master=self)
         # show canvas
-        self.plotCanvas.show()
+        self.plotCanvas.draw()
         # pack into UI
         self.plotCanvas.get_tk_widget().grid(row=0, column=0, columnspan=6)
         self.plotCanvas._tkcanvas.grid(row=0, column=0, columnspan=6)
@@ -85,12 +85,13 @@ class PlotHandlerUI(tk.Frame):
             data = list(channel.data)
             num_points = len(data)
             axes = self.axes[i]
+            axes.clear()
             axes.plot(range(0,num_points), data,'k', color='c')
             axes.set_title('CH A'+str(i))
             axes.set_ylim(0,5)
             axes.set_yticks([0, 1, 2, 3, 4, 5])
             axes.set_xticks([])
-            axes.hold(False)
+            #axes.hold(False)
             if channel.alarm:
                 axes.axhline(y=channel.alarm.triggerValue, xmax=num_points, color='c')
 

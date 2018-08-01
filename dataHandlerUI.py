@@ -4,19 +4,14 @@ The data handler is a TkInter gui for:
 - select file name/location
 """
 
-import dataDeque.datahandler
+import datahandler
 
 import os
 
 # Python 3
-# import tkinter as tk
-# from tkinter import ttk
-# from tkinter import filedialog
-
-# Python 2
-import Tkinter as tk
-import ttk
-import tkFileDialog as filedialog
+import tkinter as tk
+from tkinter import ttk
+from tkinter import filedialog
 
 
 class DataHandlerUI(tk.Frame):

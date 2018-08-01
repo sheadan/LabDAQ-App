@@ -9,23 +9,23 @@ LabDAQ.py ties together:
 POLL_RATE_ms = 250
 DATA_POINTS_PER_PLOT = 100
 
+# add dataDeque folder to sys path for this program to load dependenciess
+import sys
+sys.path.insert(0, './dataDeque')
+sys.path.insert(0, './serialControllers')
 
 #Interior dependencies
 import sys
 import serialHandlerUI as sH
 import dataHandlerUI as dH
 import plotHandlerUI as pH
-from dataDeque.datahandler import DataHandler
-from serialControllers.arduino import Arduino as arduino
+from datahandler import DataHandler
+from arduino import Arduino as arduino
 
 
 # Python 3
-# import tkinter as tk
-# from tkinter import ttk
-
-# Python 2
-import Tkinter as tk
-import ttk
+import tkinter as tk
+from tkinter import ttk
 
 
 

@@ -4,6 +4,8 @@ dataDeque handles data from arduino. Data from arduino is expected in the format
 lines 1-6 are analog inputs A0-A5
 line 7 is a timestamp in ms
 """
+
+
 #import local dependencies
 from alarm import Alarm
 from channel import Channel
@@ -59,7 +61,7 @@ class DataHandler( DataSaver ):
     def get_data(self):
         """return all the data! for plotting"""
         x = [channel.data for channel in self.channels]
-        print x
+        print(x)
         return x
 
 

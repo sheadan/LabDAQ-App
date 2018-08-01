@@ -8,6 +8,7 @@ line 7 is a timestamp in ms
 # Python 2 and Python 3
 from collections import deque
 import itertools
+from time import time
 
 
 class dataDeque:
@@ -41,7 +42,7 @@ class dataDeque:
                 self.recordFlag = flagValue #if successful, change flag value
                 return True #and return True for GUI
             except IOError as err:
-                print "Failed to open file" #if file opening fails, report failure
+                print("Failed to open file") #if file opening fails, report failure
                 self.recordFile = None # set the recordFile to none
                 return False # and return False for GUI (indicating failure)
         # if setting the flag to false...
@@ -57,7 +58,7 @@ class dataDeque:
     def set_deque_length(self, newLength):
         #Create new data and time deques with newly specified length using
         # data from previous deque
-        print newLength
+        print( newLength )
         self.dequeLength = newLength
         self.dataDeque = deque( [[0.0]*6]*self.dequeLength, self.dequeLength)
         self.timeDeque = deque( [0.0]*self.dequeLength, self.dequeLength)

@@ -13,6 +13,7 @@ def getSerialPorts():
         for i in range(256):
             a = "COM%s" % i
             ports.append( a )
+
     elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
         # this excludes your current terminal "/dev/tty"
         ports = glob.glob('/dev/tty[A-Za-z]*')
